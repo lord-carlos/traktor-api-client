@@ -1,0 +1,129 @@
+/* Custom styles for the Traktor API Visualizer */
+
+.master-clock {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.decks-grid .deck {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.decks-grid .deck:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.mixer {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.browser {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.level-meter {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.level-bar {
+  transition: height 0.1s ease;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.status-indicator.playing {
+  background-color: #10B981; /* green-500 */
+  box-shadow: 0 0 4px rgba(16, 185, 129, 0.5);
+}
+
+.status-indicator.synced {
+  background-color: #3B82F6; /* blue-500 */
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+.on-air-indicator.visible {
+  display: block;
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.8);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Reduce font sizes for better density */
+body {
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 1.25rem;
+}
+
+h2 {
+  font-size: 1.125rem;
+}
+
+.deck-stats {
+  font-size: 0.875rem;
+}
+
+.level-value {
+  font-size: 0.75rem;
+}
+
+/* Responsive scaling */
+.container {
+  width: 100%;
+  max-width: 100%;
+  padding: 1vmin;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  body {
+    font-size: 16px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  body {
+    font-size: 18px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}

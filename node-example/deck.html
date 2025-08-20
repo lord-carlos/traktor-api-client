@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Traktor Deck Viewer</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="deck.css" rel="stylesheet">
+</head>
+<body>
+    <button class="fullscreen-button" id="fullscreen-toggle">⛶</button>
+    
+    <div class="main-content h-full flex flex-col">
+        <!-- Header with deck info -->
+        <div class="header flex justify-between items-center">
+            <div class="deck-info flex items-center">
+                <h1 class="deck-title font-bold" id="deck-title">Deck A</h1>
+                <div class="status-indicator ml-3" id="status-indicator"></div>
+            </div>
+            <div class="deck-stats flex space-x-4">
+                <div class="sync-status flex items-center" id="sync-status">
+                    <span class="status-indicator status-synced mr-1"></span>
+                    <span class="text-sm">SYNC</span>
+                </div>
+                <div class="key-lock-status flex items-center" id="key-lock-status">
+                    <span class="status-indicator status-stopped mr-1"></span>
+                    <span class="text-sm">KEY LOCK</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main content area -->
+        <div class="main-area flex-grow flex flex-col md:flex-row">
+            <!-- Track information (left side) -->
+            <div class="track-info flex-grow flex flex-col justify-center mb-4 md:mb-0 md:mr-4">
+                <h2 class="track-title font-bold" id="track-title">No track loaded</h2>
+                <h3 class="track-artist text-gray-300" id="track-artist">-</h3>
+            </div>
+            
+            <!-- BPM and Key information (right side) -->
+            <div class="bpm-key-info flex flex-col justify-center items-end">
+                <div class="bpm-section text-right mb-4">
+                    <div class="text-sm text-gray-400 mb-1">BPM</div>
+                    <div class="bpm-display" id="bpm-display">0.00</div>
+                </div>
+                <div class="key-section text-right">
+                    <div class="text-sm text-gray-400 mb-1">KEY</div>
+                    <div class="key-display" id="key-display">-</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Progress section (stretches between top and bottom) -->
+        <div class="progress-section flex-grow flex items-center my-4">
+            <div class="progress-container w-full">
+                <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                <div class="progress-marker" id="progress-marker" style="left: 0%"></div>
+            </div>
+        </div>
+        
+        <!-- Time information (sticks to bottom) -->
+        <div class="time-info flex justify-between">
+            <div class="elapsed-time time-display" id="elapsed-time">00:00</div>
+            <div class="remaining-time time-display" id="remaining-time">-00:00</div>
+        </div>
+        
+        <!-- Connection status -->
+        <div class="connection-status text-center text-sm text-gray-500 mt-4" id="connection-status">
+            Connecting to server...
+        </div>
+    </div>
+
+    <script src="deck.js"></script>
+</body>
+</html>

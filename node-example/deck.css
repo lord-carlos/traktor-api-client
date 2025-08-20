@@ -1,0 +1,182 @@
+:root {
+    --deck-a-color: #ef4444; /* red-500 */
+    --deck-b-color: #3b82f6; /* blue-500 */
+    --deck-c-color: #10b981; /* green-500 */
+    --deck-d-color: #f59e0b; /* amber-500 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a202c, #2d3748);
+    color: white;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.deck-a-theme { --deck-color: var(--deck-a-color); }
+.deck-b-theme { --deck-color: var(--deck-b-color); }
+.deck-c-theme { --deck-color: var(--deck-c-color); }
+.deck-d-theme { --deck-color: var(--deck-d-color); }
+
+.progress-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--deck-color), #ffffff);
+    border-radius: 10px;
+    transition: width 0.1s ease;
+}
+
+.progress-marker {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: white;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.track-info {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bpm-display {
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.key-display {
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.status-indicator {
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-playing {
+    background-color: #10B981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+}
+
+.status-synced {
+    background-color: #3B82F6;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+}
+
+.status-stopped {
+    background-color: #6B7280;
+}
+
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 800;
+}
+
+.fullscreen-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.fullscreen-button:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Truly responsive styles using relative units */
+.main-content {
+    padding: 2vmin;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.header {
+    margin-bottom: 2vmin;
+}
+
+.deck-title {
+    font-size: 4vmin;
+}
+
+.status-indicator {
+    width: 3vmin;
+    height: 3vmin;
+}
+
+.text-sm {
+    font-size: 2.5vmin;
+}
+
+.track-title {
+    font-size: 5vmin;
+    margin-bottom: 1vmin;
+}
+
+.track-artist {
+    font-size: 3.5vmin;
+    margin-bottom: 3vmin;
+}
+
+.bpm-display {
+    font-size: 7vmin;
+    margin-bottom: 1vmin;
+}
+
+.key-display {
+    font-size: 5vmin;
+}
+
+.progress-container {
+    height: 4vmin;
+    margin: 2vmin 0;
+}
+
+.time-display {
+    font-size: 3vmin;
+}
+
+.connection-status {
+    margin-top: 2vmin;
+    font-size: 2.5vmin;
+}
+
+/* Fullscreen styles */
+.fullscreen .main-content {
+    padding: 2vmin;
+}
+
+.fullscreen .header {
+    margin-bottom: 2vmin;
+}
+
+.fullscreen .track-artist {
+    margin-bottom: 3vmin;
+}
+
+.fullscreen .progress-container {
+    margin: 2vmin 0;
+}
+
+.fullscreen .connection-status {
+    margin-top: 2vmin;
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traktor API Visualizer</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-2">
+    <div class="container mx-auto max-w-6xl">
+        <header class="text-center mb-3">
+            <h1 class="text-xl font-bold">Traktor API Visualizer</h1>
+            <p class="text-gray-400 text-sm">Real-time visualization of Traktor Pro data</p>
+            <!-- Deck view links -->
+            <div class="flex justify-center space-x-4 mt-2">
+                <a href="/a" class="text-sm bg-red-500 hover:bg-red-600 px-2 py-1 rounded">Deck A</a>
+                <a href="/b" class="text-sm bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded">Deck B</a>
+                <a href="/c" class="text-sm bg-green-500 hover:bg-green-600 px-2 py-1 rounded">Deck C</a>
+                <a href="/d" class="text-sm bg-amber-500 hover:bg-amber-600 px-2 py-1 rounded">Deck D</a>
+            </div>
+        </header>
+
+        <!-- Master Clock -->
+        <div class="master-clock bg-gray-800 rounded-lg p-2 mb-3 text-center">
+            <h2 class="text-base font-semibold mb-1">Master Clock</h2>
+            <div class="flex justify-center items-center space-x-4">
+                <div class="text-center">
+                    <div class="text-xs text-gray-400">DECK</div>
+                    <div id="master-deck" class="text-base font-mono">-</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xs text-gray-400">BPM</div>
+                    <div id="master-bpm" class="text-base font-mono">0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decks Grid -->
+        <div class="decks-grid grid grid-cols-2 gap-2 mb-3">
+            <!-- Deck A -->
+            <div class="deck bg-gray-800 rounded-lg p-2" data-deck="A">
+                <div class="deck-header flex justify-between items-center mb-1">
+                    <h2 class="text-sm font-semibold">Deck A</h2>
+                    <div class="status-indicator w-2 h-2 rounded-full bg-red-500" id="deck-a-status"></div>
+                </div>
+                <div class="track-info mb-1">
+                    <div class="text-sm font-medium truncate" id="deck-a-title">No track loaded</div>
+                    <div class="text-gray-400 text-xs truncate" id="deck-a-artist">-</div>
+                </div>
+                <div class="deck-stats grid grid-cols-2 gap-1">
+                    <div class="bpm-stat">
+                        <div class="text-xs text-gray-400">BPM</div>
+                        <div class="text-sm font-mono" id="deck-a-bpm">0.00</div>
+                    </div>
+                    <div class="key-stat">
+                        <div class="text-xs text-gray-400">KEY</div>
+                        <div class="text-sm font-mono" id="deck-a-key">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deck B -->
+            <div class="deck bg-gray-800 rounded-lg p-2" data-deck="B">
+                <div class="deck-header flex justify-between items-center mb-1">
+                    <h2 class="text-sm font-semibold">Deck B</h2>
+                    <div class="status-indicator w-2 h-2 rounded-full bg-red-500" id="deck-b-status"></div>
+                </div>
+                <div class="track-info mb-1">
+                    <div class="text-sm font-medium truncate" id="deck-b-title">No track loaded</div>
+                    <div class="text-gray-400 text-xs truncate" id="deck-b-artist">-</div>
+                </div>
+                <div class="deck-stats grid grid-cols-2 gap-1">
+                    <div class="bpm-stat">
+                        <div class="text-xs text-gray-400">BPM</div>
+                        <div class="text-sm font-mono" id="deck-b-bpm">0.00</div>
+                    </div>
+                    <div class="key-stat">
+                        <div class="text-xs text-gray-400">KEY</div>
+                        <div class="text-sm font-mono" id="deck-b-key">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deck C -->
+            <div class="deck bg-gray-800 rounded-lg p-2" data-deck="C">
+                <div class="deck-header flex justify-between items-center mb-1">
+                    <h2 class="text-sm font-semibold">Deck C</h2>
+                    <div class="status-indicator w-2 h-2 rounded-full bg-red-500" id="deck-c-status"></div>
+                </div>
+                <div class="track-info mb-1">
+                    <div class="text-sm font-medium truncate" id="deck-c-title">No track loaded</div>
+                    <div class="text-gray-400 text-xs truncate" id="deck-c-artist">-</div>
+                </div>
+                <div class="deck-stats grid grid-cols-2 gap-1">
+                    <div class="bpm-stat">
+                        <div class="text-xs text-gray-400">BPM</div>
+                        <div class="text-sm font-mono" id="deck-c-bpm">0.00</div>
+                    </div>
+                    <div class="key-stat">
+                        <div class="text-xs text-gray-400">KEY</div>
+                        <div class="text-sm font-mono" id="deck-c-key">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deck D -->
+            <div class="deck bg-gray-800 rounded-lg p-2" data-deck="D">
+                <div class="deck-header flex justify-between items-center mb-1">
+                    <h2 class="text-sm font-semibold">Deck D</h2>
+                    <div class="status-indicator w-2 h-2 rounded-full bg-red-500" id="deck-d-status"></div>
+                </div>
+                <div class="track-info mb-1">
+                    <div class="text-sm font-medium truncate" id="deck-d-title">No track loaded</div>
+                    <div class="text-gray-400 text-xs truncate" id="deck-d-artist">-</div>
+                </div>
+                <div class="deck-stats grid grid-cols-2 gap-1">
+                    <div class="bpm-stat">
+                        <div class="text-xs text-gray-400">BPM</div>
+                        <div class="text-sm font-mono" id="deck-d-bpm">0.00</div>
+                    </div>
+                    <div class="key-stat">
+                        <div class="text-xs text-gray-400">KEY</div>
+                        <div class="text-sm font-mono" id="deck-d-key">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mixer Channels -->
+        <div class="mixer bg-gray-800 rounded-lg p-3 mb-3">
+            <h2 class="text-lg font-semibold mb-2">Mixer Channels</h2>
+            <div class="channels grid grid-cols-4 gap-2">
+                <!-- Channel 1 -->
+                <div class="channel text-center">
+                    <div class="channel-header mb-1">
+                        <h3 class="text-sm font-medium">CH 1</h3>
+                    </div>
+                    <div class="level-meter bg-gray-700 h-20 rounded mb-1 relative overflow-hidden">
+                        <div class="level-bar absolute bottom-0 left-0 right-0 bg-green-500" id="channel-1-level" style="height: 0%"></div>
+                        <div class="on-air-indicator absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-red-500 hidden" id="channel-1-onair"></div>
+                    </div>
+                    <div class="level-value text-xs font-mono" id="channel-1-value">0%</div>
+                </div>
+
+                <!-- Channel 2 -->
+                <div class="channel text-center">
+                    <div class="channel-header mb-1">
+                        <h3 class="text-sm font-medium">CH 2</h3>
+                    </div>
+                    <div class="level-meter bg-gray-700 h-20 rounded mb-1 relative overflow-hidden">
+                        <div class="level-bar absolute bottom-0 left-0 right-0 bg-green-500" id="channel-2-level" style="height: 0%"></div>
+                        <div class="on-air-indicator absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-red-500 hidden" id="channel-2-onair"></div>
+                    </div>
+                    <div class="level-value text-xs font-mono" id="channel-2-value">0%</div>
+                </div>
+
+                <!-- Channel 3 -->
+                <div class="channel text-center">
+                    <div class="channel-header mb-1">
+                        <h3 class="text-sm font-medium">CH 3</h3>
+                    </div>
+                    <div class="level-meter bg-gray-700 h-20 rounded mb-1 relative overflow-hidden">
+                        <div class="level-bar absolute bottom-0 left-0 right-0 bg-green-500" id="channel-3-level" style="height: 0%"></div>
+                        <div class="on-air-indicator absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-red-500 hidden" id="channel-3-onair"></div>
+                    </div>
+                    <div class="level-value text-xs font-mono" id="channel-3-value">0%</div>
+                </div>
+
+                <!-- Channel 4 -->
+                <div class="channel text-center">
+                    <div class="channel-header mb-1">
+                        <h3 class="text-sm font-medium">CH 4</h3>
+                    </div>
+                    <div class="level-meter bg-gray-700 h-20 rounded mb-1 relative overflow-hidden">
+                        <div class="level-bar absolute bottom-0 left-0 right-0 bg-green-500" id="channel-4-level" style="height: 0%"></div>
+                        <div class="on-air-indicator absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-red-500 hidden" id="channel-4-onair"></div>
+                    </div>
+                    <div class="level-value text-xs font-mono" id="channel-4-value">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="connection-status text-center mt-3 text-xs text-gray-500" id="connection-status">
+            Connecting to server...
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
