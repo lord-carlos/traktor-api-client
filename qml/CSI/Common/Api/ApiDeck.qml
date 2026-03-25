@@ -1,3 +1,7 @@
+// Based on traktor-api-client by ErikMinekus
+// MIT License - https://github.com/ErikMinekus/traktor-api-client
+// Merged with traktor-logger for combined functionality
+
 import CSI 1.0
 import QtQuick 2.0
 import "ApiClient.js" as ApiClient
@@ -36,6 +40,22 @@ Item {
   AppProperty { id: propBpm;           path: pathPrefix + "tempo.base_bpm" }
   AppProperty { id: propTempo;         path: pathPrefix + "tempo.tempo_for_display";      onValueChanged: tempoChangedTimer.restart() }
   AppProperty { id: propResultingKey;  path: pathPrefix + "track.key.resulting.precise";  onValueChanged: keyChangedTimer.restart() }
+  AppProperty { id: propDeckType;      path: pathPrefix + "type";                          onValueChanged: deckTypeChangedTimer.restart() }
+  AppProperty { id: propActiveSlot;    path: pathPrefix + "active_slot";                   onValueChanged: deckTypeChangedTimer.restart() }
+
+  // Stem properties (stems 1-4)
+  AppProperty { id: propStem1Volume;    path: pathPrefix + "stems.1.volume";       onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem1Filter;    path: pathPrefix + "stems.1.filter_value"; onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem1FilterOn;  path: pathPrefix + "stems.1.filter_on";    onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem2Volume;    path: pathPrefix + "stems.2.volume";       onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem2Filter;    path: pathPrefix + "stems.2.filter_value"; onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem2FilterOn;  path: pathPrefix + "stems.2.filter_on";    onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem3Volume;    path: pathPrefix + "stems.3.volume";       onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem3Filter;    path: pathPrefix + "stems.3.filter_value"; onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem3FilterOn;  path: pathPrefix + "stems.3.filter_on";    onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem4Volume;    path: pathPrefix + "stems.4.volume";       onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem4Filter;    path: pathPrefix + "stems.4.filter_value"; onValueChanged: stemChangedTimer.restart() }
+  AppProperty { id: propStem4FilterOn;  path: pathPrefix + "stems.4.filter_on";    onValueChanged: stemChangedTimer.restart() }
 
   Repeater {
     model: 8
@@ -114,9 +134,42 @@ Item {
         bpm:          propBpm.value,
         tempo:        propTempo.value,
         resultingKey: propResultingKey.value,
+        deckType:     propDeckType.value,
+        activeSlot:   propActiveSlot.value,
         isPlaying:    propIsPlaying.value,
         isSynced:     propIsSynced.value,
         isKeyLockOn:  propIsKeyLockOn.value,
+      })
+      
+      // If this is a stem deck (type 2), send initial stem data
+      if (propDeckType.value === 2) {
+        stemChangedTimer.restart()
+      }
+    }
+  }
+  Timer {
+    id: deckTypeChangedTimer
+    interval: 250
+
+    onTriggered: {
+      ApiClient.send("updateDeck/" + deckLetter, {
+        deckType:   propDeckType.value,
+        activeSlot: propActiveSlot.value,
+      })
+    }
+  }
+  Timer {
+    id: stemChangedTimer
+    interval: 250
+
+    onTriggered: {
+      ApiClient.send("updateDeckStems/" + deckLetter, {
+        stems: [
+          { volume: propStem1Volume.value, filter: propStem1Filter.value, filterOn: propStem1FilterOn.value },
+          { volume: propStem2Volume.value, filter: propStem2Filter.value, filterOn: propStem2FilterOn.value },
+          { volume: propStem3Volume.value, filter: propStem3Filter.value, filterOn: propStem3FilterOn.value },
+          { volume: propStem4Volume.value, filter: propStem4Filter.value, filterOn: propStem4FilterOn.value }
+        ]
       })
     }
   }

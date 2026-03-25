@@ -1,3 +1,7 @@
+// Based on traktor-api-client by ErikMinekus
+// MIT License - https://github.com/ErikMinekus/traktor-api-client
+// Merged with traktor-logger for combined functionality
+
 import CSI 1.0
 import QtQuick 2.0
 import "ApiClient.js" as ApiClient

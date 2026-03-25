@@ -7,30 +7,31 @@ The following endpoints are used:
 - `/updateDeck/<deck>`: Called when certain values or state changes for a deck.
 - `/updateMasterClock`: Called when the master deck or BPM changes.
 - `/updateChannel/<channel>`: Called when state changes for a mixer channel.
+- `/metadata`: Called when browser state changes, including playlist information and track listings.
 
 ## How to install
 
 **Mac:**
 
-  - Navigate to /Applications/Native Instruments/Traktor Pro 3
+  - Navigate to /Applications/Native Instruments/Traktor Pro 4
   - Right click Traktor.app, then click Show Package Contents
-  - Navigate to Contents/Resources/qml/CSI
-  - Make a backup of the D2 folder!
-  - Replace the D2 folder
+  - Navigate to Contents/Resources/
+  - Make a backup of the `qml` folder!
+  - Replace the `qml` folder
   - Restart Traktor
-  - If you don't own a Traktor Kontrol D2:
+  - If you don't own a Traktor Kontrol `S8`:
     - Go to Preferences > Controller Manager
-    - Below the Device dropdown, click Add… > Traktor > Kontrol D2
+    - Below the Device dropdown, click Add… > Traktor > Kontrol S8
 
 **Windows:**
 
-  - Navigate to C:\Program Files\Native Instruments\Traktor Pro 3\Resources64\qml\CSI
-  - Make a backup of the D2 folder!
-  - Replace the D2 folder
+  - Navigate to C:\Program Files\Native Instruments\Traktor Pro 4\Resources64\
+  - Make a backup of the `qml` folder!
+  - Replace the `qml` folder
   - Restart Traktor
-  - If you don't own a Traktor Kontrol D2:
+  - If you don't own a Traktor Kontrol S8:
     - Go to Preferences > Controller Manager
-    - Below the Device dropdown, click Add… > Traktor > Kontrol D2
+    - Below the Device dropdown, click Add… > Traktor > Kontrol S8
 
 ## Example Projects
 

@@ -9,6 +9,7 @@ Endpoints:
 - /updateDeck/<deck>: Called when deck values or state changes
 - /updateMasterClock: Called when the master deck or BPM changes
 - /updateChannel/<channel>: Called when mixer channel state changes (1, 2, 3, 4)
+- /metadata: Called when metadata is updated
 
 To use this example:
 1. Make sure Traktor Pro is running with the modified D2 controller
@@ -25,7 +26,8 @@ latest_data = {
     'decks': {},
     'channels': {},
     'master_clock': {},
-    'browser': {}
+    'browser': {},
+    'metadata': {}
 }
 
 class TraktorAPIHandler(BaseHTTPRequestHandler):
@@ -64,6 +66,8 @@ class TraktorAPIHandler(BaseHTTPRequestHandler):
         elif len(path_parts) >= 2 and path_parts[0] == 'updateChannel':
             channel = path_parts[1]
             self.handle_channel_update(channel, data)
+        elif path_parts[0] == 'metadata':
+            self.handle_metadata(data)
         else:
             print(f"Unknown endpoint: {self.path}")
         
@@ -142,6 +146,17 @@ class TraktorAPIHandler(BaseHTTPRequestHandler):
             latest_data['channels'][channel].update(data)
         else:
             latest_data['channels'][channel] = data
+    
+    def handle_metadata(self, data):
+        """Handle metadata updates"""
+        print(f"\n--- Metadata Update ---")
+        
+        # Print any available metadata fields
+        for key, value in data.items():
+            print(f"{key}: {value}")
+        
+        # Store the data
+        latest_data['metadata'].update(data)
     
     def log_message(self, format, *args):
         """Override to disable default logging"""

@@ -4,8 +4,8 @@ import "ApiClient.js" as ApiClient
 
 Item {
   property int       index:            1
-  property bool      isOnAirState:     null
-  property real      onAirLevelState:  null
+  property bool      isOnAirState:     false
+  property real      onAirLevelState:  0.0
 
   readonly property string    pathPrefix:  "app.traktor.mixer.channels." + index + "."
 
